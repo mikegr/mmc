@@ -1,0 +1,15 @@
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+	<EditTextPreference
+                android:key="password_id"
+                android:title="Password"
+                android:summary="Zur Kommunikation mit Device"
+                android:dialogTitle="Dialog Titel" />
+
+	<EditTextPreference
+                android:key="device_id"
+                android:title="Password"
+                android:summary="Zur Kommunikation mit Device"
+                android:dialogTitle="Dialog Titel" />
+                                
+</PreferenceScreen>               

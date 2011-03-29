@@ -419,8 +419,8 @@ public class BluetoothChatService {
          */
         public void write(byte[] buffer) {
             try {
-                mmOutStream.write("a\n\r".getBytes("utf-8"));
-
+                //mmOutStream.write("a\n\r".getBytes("utf-8"));
+            	mmOutStream.write(buffer);
                 // Share the sent message back to the UI Activity
                 mHandler.obtainMessage(BluetoothChat.MESSAGE_WRITE, -1, -1, buffer)
                         .sendToTarget();

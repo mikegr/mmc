@@ -37,12 +37,15 @@
                   android:configChanges="orientation|keyboardHidden" />
                   
         <activity android:name=".TestActivity"
-                  android:label="Test"
+                  android:label="elfKW.at                                         MMC-v3 Monitor"
                   >
         	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>          
+        </activity>         
+        <activity android:name=".MmcPreferences" android:label="Einstellungen">
+        </activity>
+         
     </application>
 </manifest>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+	android:background="#696969"
+  >
+    <TextView 
+    	android:text="TextView" 
+    	android:id="@+id/speedTextView" 
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content"
+    	android:layout_marginLeft="3px"
+		android:layout_marginBottom="3px"
+		android:layout_marginRight="3px"
+		android:layout_marginTop="3px"
+		android:background="#d3d3d3"
+		>
+    </TextView>
+    <TextView 
+    	android:text="TextView" 
+    	android:id="@+id/consumeTextView" 
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content"
+    	android:layout_marginLeft="3px"
+		android:layout_marginBottom="3px"
+		android:layout_marginRight="3px"
+		android:layout_marginTop="3px"
+		android:background="#d3d3d3"
+    	>
+    </TextView>
+    <LinearLayout 
+    	android:layout_height="wrap_content" 
+    	android:id="@+id/linearLayout1" 
+    	android:layout_width="fill_parent">
+        <TextView 
+        	android:text="TextView"
+        	android:id="@+id/voltageTextView" 
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="3px"
+			android:layout_marginBottom="3px"
+			android:layout_marginRight="3px"
+			android:layout_marginTop="3px"
+		android:background="#d3d3d3"
+        	>
+        </TextView>
+        <TextView 
+        	android:text="TextView"
+        	android:id="@+id/currentTextView"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="3px"
+			android:layout_marginBottom="3px"
+			android:layout_marginRight="3px"
+			android:layout_marginTop="3px"
+		android:background="#d3d3d3"
+			>
+        </TextView>
+    </LinearLayout>
+    <LinearLayout 
+    	android:layout_height="fill_parent" android:id="@+id/linearLayout2" android:layout_width="fill_parent">
+		<ToggleButton 
+        		android:text="ToggleButton" 
+        		android:id="@+id/onOffButton" 
+        		android:layout_width="wrap_content" 
+        		android:layout_height="fill_parent"
+        		android:textOn="engine ON"
+        		android:textOff="engine OFF"
+        		android:checked="true"
+        		android:visibility="visible">
+        </ToggleButton>
+		<TableLayout android:layout_width="wrap_content" android:id="@+id/tableLayout1" android:layout_height="fill_parent">
+			<TextView android:layout_height="wrap_content" android:text="TextView" android:id="@+id/battTextView" android:layout_width="wrap_content"         	android:layout_marginLeft="3px"
+			android:layout_marginBottom="3px"
+			android:layout_marginRight="3px"
+			android:layout_marginTop="3px"
+			android:background="#d3d3d3">
+			</TextView>
+			<TextView android:layout_marginRight="3px" android:layout_height="wrap_content" android:layout_marginTop="3px" android:layout_marginBottom="3px" android:layout_width="wrap_content" android:layout_marginLeft="3px" android:id="@+id/reserveTextView" android:background="#d3d3d3" android:text="TextView"></TextView>
+			<Button android:text="Chat" android:id="@+id/monitorButton" android:layout_width="wrap_content" android:layout_height="fill_parent"></Button>
+		</TableLayout>
+        <ToggleButton 
+        		android:text="ToggleButton" 
+        		android:id="@+id/lightButton" 
+        		android:layout_width="wrap_content" 
+        		android:layout_height="fill_parent"
+        		android:textOn="light 7V"
+        		android:textOff="light OFF"
+        		android:checked="true"
+        		android:visibility="visible"
+		>
+        </ToggleButton>
+        
+    </LinearLayout>
+</LinearLayout>
