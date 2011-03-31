@@ -62,8 +62,8 @@ public final class R {
          */
         public static final int connect=0x7f05000e;
         public static final int discoverable=0x7f05000f;
-        public static final int login=0x7f050012;
-        public static final int logout=0x7f050011;
+        public static final int login=0x7f050013;
+        public static final int logout=0x7f050012;
         public static final int none_found=0x7f05000a;
         public static final int none_paired=0x7f050009;
         public static final int not_connected=0x7f050002;
@@ -77,6 +77,7 @@ public final class R {
         public static final int settings=0x7f050010;
         public static final int title_connected_to=0x7f050005;
         public static final int title_connecting=0x7f050004;
+        public static final int title_elfkw=0x7f050011;
         public static final int title_not_connected=0x7f050006;
         public static final int title_other_devices=0x7f05000c;
         public static final int title_paired_devices=0x7f05000b;

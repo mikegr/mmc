@@ -19,6 +19,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,10 +29,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class TestActivity extends Activity  {
@@ -49,6 +52,7 @@ public class TestActivity extends Activity  {
 	private Button monitorButton;
 	private ToggleButton lightButton;
 	//private ProgressBar batteryBar;
+	private TextView mTitle;
 	
 	SharedPreferences prefs = null;
 	@Override
@@ -58,8 +62,17 @@ public class TestActivity extends Activity  {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);	
 	
 		
-		
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.main_screen);
+		
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+		
+		mTitle = (TextView) findViewById(R.id.title_left_text);
+		
+		mTitle.setText(R.string.title_elfkw);
+		mTitle = (TextView) findViewById(R.id.title_right_text);
+		
+		
 		speedTextView = (TextView) findViewById(R.id.speedTextView);
 
 		speedTextView.setHeight(100);
@@ -134,10 +147,15 @@ public class TestActivity extends Activity  {
 			}
 		});
 		
+
+		
+		
 		//batteryBar = (ProgressBar) findViewById(R.id.batteryBar);
 		//batteryBar.setBackgroundColor(Color.GRAY);
 		//batteryBar.setAnimation(null);
-		//batteryBar.setEnabled(true);	
+		//batteryBar.setEnabled(true);
+		
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	}
 	
@@ -146,23 +164,61 @@ public class TestActivity extends Activity  {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		login();
 	}
 	
+	protected void onStop() {
+		logout();
+		super.onStop();
+	};
+	
+    // Intent request codes
+    private static final int REQUEST_CONNECT_DEVICE = 1;
+    private static final int REQUEST_ENABLE_BT = 2;
+	
+	BluetoothAdapter mBluetoothAdapter = null;
 	BluetoothSocket socket = null;
 	InputStream mmInStream = null;
 	OutputStream mmOutStream = null;
 	
+	   @Override
+	    public void onStart() {
+	        super.onStart();
+	        Log.e(TAG, "++ ON START ++");
+
+	        // If BT is not on, request that it be enabled.
+	        // setupChat() will then be called during onActivityResult
+	        if (!mBluetoothAdapter.isEnabled()) {
+	            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+	            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+	        }
+	        else {
+	        	login();	
+	        }
+	    }
 
 	public void login() {
 		Log.v(TAG, "starting login");
 		try {
 			
-			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
-					.getDefaultAdapter();
+			
 			Log.v(TAG, "got adapter");
+			String deviceId = prefs.getString("device_id","");
+			
+			if ("".equals(deviceId)) {
+	            Intent serverIntent = new Intent(this, DeviceListActivity.class);
+	            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+	            return;
+			}
+			if (socket != null) {
+				try {
+					socket.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			
 			BluetoothDevice mmDevice = mBluetoothAdapter
-					.getRemoteDevice("00:12:6F:20:DF:B1");
+					.getRemoteDevice(deviceId);
 			Log.v(TAG, "got device");
 			Method m = mmDevice.getClass().getMethod("createRfcommSocket",
 					new Class[] { int.class });
@@ -216,14 +272,33 @@ public class TestActivity extends Activity  {
 					} catch (Exception e) {
 						Log.v(TAG, "Reading thread throwed exception", e);
 					}
+					finally {
+						/*
+						TestActivity.this.runOnUiThread(new Runnable() {
+							
+							public void run() {
+								mTitle.setText(R.string.title_not_connected);		
+							}
+						});
+						
+						try {
+							socket.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						*/
+					}
 				}
 				
 			}).start();
 			
+			Thread.sleep(500);
+			
 			// password_id?
 			String password = prefs.getString("password_id", "");
 			Log.v(TAG, "password read:" + password);
-			mmOutStream.write((password + "\n\r").getBytes());
+			mmOutStream.write((password + "\r").getBytes());
 			//mmOutStream.write(("a\r").getBytes());
 
 			//byte[] buffer = new byte[1024];
@@ -231,6 +306,8 @@ public class TestActivity extends Activity  {
 			//Log.v(TAG, "Read:" + new String(buffer, 0, len));
 			
 			Log.v(TAG, "password sent");
+			
+			mTitle.setText(R.string.title_connected_to);
 			// MK
 
 			mmOutStream.write("at-push=1\r".getBytes());
@@ -263,22 +340,13 @@ public class TestActivity extends Activity  {
 		} catch (Exception e) {
 			close();
 		}
+		finally {
+			mTitle.setText(R.string.title_not_connected);
+		}
 	}
 
 	private void close() {
 		Log.v(TAG, "Closing streams and socket");
-		try {
-			if (mmOutStream != null)  mmOutStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			if (mmInStream != null)  mmInStream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		try {
 			if (socket != null) socket.close();
 		} catch (IOException e) {
@@ -292,7 +360,40 @@ public class TestActivity extends Activity  {
 		getMenuInflater().inflate(R.menu.mmc_options, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
+	
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult " + resultCode);
+        switch (requestCode) {
+        case REQUEST_CONNECT_DEVICE:
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+                // Get the device MAC address
+                String address = data.getExtras()
+                                     .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                // Get the BLuetoothDevice object
+                Editor editor = prefs.edit();
+                editor.putString("device_id", address);
+                editor.commit();
+                // Attempt to connect to the device
+                login();
+            }
+            break;
+        case REQUEST_ENABLE_BT:
+            // When the request to enable Bluetooth returns
+            if (resultCode == Activity.RESULT_OK) {
+            	login();
+            } else {
+                // User did not enable Bluetooth or an error occured
+                Log.d(TAG, "BT not enabled");
+                Toast.makeText(this, R.string.bt_not_enabled_leaving, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
+    
 
+    
+    
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.settings) {

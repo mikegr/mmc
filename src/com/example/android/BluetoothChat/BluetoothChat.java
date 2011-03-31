@@ -173,19 +173,22 @@ public class BluetoothChat extends Activity {
     public synchronized void onPause() {
         super.onPause();
         if(D) Log.e(TAG, "- ON PAUSE -");
+        if (mChatService != null) mChatService.stop();
     }
 
     @Override
     public void onStop() {
-        super.onStop();
-        if(D) Log.e(TAG, "-- ON STOP --");
+    	if(D) Log.e(TAG, "-- ON STOP --");
+    	
+    	super.onStop();
+        
+        
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         // Stop the Bluetooth chat services
-        if (mChatService != null) mChatService.stop();
         if(D) Log.e(TAG, "--- ON DESTROY ---");
     }
 
