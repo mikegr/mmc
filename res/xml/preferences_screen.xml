@@ -2,14 +2,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 	<EditTextPreference
                 android:key="password_id"
-                android:title="Password"
-                android:summary="Zur Kommunikation mit Device"
-                android:dialogTitle="Dialog Titel" />
+                android:title="Passwort"
+                android:summary="Zum Login in den MMC-Monitor"
+                android:dialogTitle="Passwort eingeben" />
 
 	<EditTextPreference
                 android:key="device_id"
-                android:title="Password"
-                android:summary="Zur Kommunikation mit Device"
-                android:dialogTitle="Dialog Titel" />
+                android:title="Gerät"
+                android:summary="Geräte-Adresse des MMC-Monitors (zb 00:12:6F:20:DF:B1)"
+                android:dialogTitle="Geräte-Adresse eingeben" />
                                 
 </PreferenceScreen>               

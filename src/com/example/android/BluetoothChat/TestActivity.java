@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
@@ -107,6 +108,14 @@ public class TestActivity extends Activity  {
 		reserveTextView.setText("23 km");
 
 		monitorButton = (Button) findViewById(R.id.monitorButton);
+		monitorButton.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent i = new Intent(TestActivity.this, BluetoothChat.class);
+				startActivity(i);
+			}
+		});
+		
 		//reserveTextView.setHeight(30);
 		
 		onOffButton = (ToggleButton) findViewById(R.id.onOffButton);
@@ -211,9 +220,11 @@ public class TestActivity extends Activity  {
 				
 			}).start();
 			
+			// password_id?
 			String password = prefs.getString("password_id", "");
-			Log.v(TAG, "password read");
-			mmOutStream.write((password + "\r").getBytes());
+			Log.v(TAG, "password read:" + password);
+			mmOutStream.write((password + "\n\r").getBytes());
+			//mmOutStream.write(("a\r").getBytes());
 
 			//byte[] buffer = new byte[1024];
 			//int len = mmInStream.read(buffer);
@@ -224,7 +235,7 @@ public class TestActivity extends Activity  {
 
 			mmOutStream.write("at-push=1\r".getBytes());
 			//mmOutStream.write("at-logout\r".getBytes());
-			Log.v(TAG, "at-push sent");
+			Log.v(TAG, "at-push=1 sent");
 			
 
 		} catch (Exception e) {
