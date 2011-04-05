@@ -17,7 +17,7 @@
 		android:layout_marginTop="3px"
 		android:background="#d3d3d3"
 		android:layout_weight="0.2"
-		android:textSize="50sp"
+		android:textSize="35sp"
 		>
     </TextView>
     <TextView 
@@ -31,7 +31,7 @@
 		android:layout_marginTop="3px"
 		android:background="#d3d3d3"
 		android:layout_weight="0.2"
-		android:textSize="50sp"
+		android:textSize="35sp"
     	>
     </TextView>
     <LinearLayout 
@@ -51,7 +51,7 @@
 			android:layout_marginTop="3px"
 			android:background="#d3d3d3"
 			android:layout_weight="0.5"
-			android:textSize="20sp"
+			android:textSize="35sp"
         	>
         </TextView>
         <TextView 
@@ -65,7 +65,7 @@
 			android:layout_marginTop="3px"
 			android:background="#d3d3d3"
 			android:layout_weight="0.5"
-			android:textSize="20sp"
+			android:textSize="35sp"
 			>
         </TextView>
     </LinearLayout>
@@ -80,35 +80,58 @@
         		android:id="@+id/onOffButton" 
         		android:layout_width="wrap_content" 
         		android:layout_height="fill_parent"
-        		android:textOn="engine ON"
-        		android:textOff="engine OFF"
+        		android:textOn="engine"
+        		android:textOff="engine"
         		android:checked="true"
         		android:visibility="visible"
-        		android:layout_weight="0.33"
+        			android:layout_weight="0.20"
         		>
         </ToggleButton>
 		<TableLayout 
 			android:layout_width="wrap_content" 
 			android:id="@+id/tableLayout1" 
 			android:layout_height="fill_parent"
-			android:layout_weight="0.33"
+			android:layout_weight="0.60"
 			>
-			<TextView android:layout_height="wrap_content" android:text="TextView" android:id="@+id/battTextView" android:layout_width="wrap_content"         	android:layout_marginLeft="3px"
+			<TextView 
+			android:layout_height="wrap_content" 
+			android:text="TextView" 
+			android:id="@+id/battTextView" 
+	        		android:layout_weight="0.33"
+			android:layout_width="wrap_content"
+			android:layout_marginLeft="3px"
 			android:layout_marginBottom="3px"
 			android:layout_marginRight="3px"
 			android:layout_marginTop="3px"
-			android:background="#d3d3d3">
+			android:background="#d3d3d3"
+			android:textSize="30sp"
+			>
 			</TextView>
-			<TextView android:layout_marginRight="3px" android:layout_height="wrap_content" android:layout_marginTop="3px" android:layout_marginBottom="3px" android:layout_width="wrap_content" android:layout_marginLeft="3px" android:id="@+id/reserveTextView" android:background="#d3d3d3" android:text="TextView"></TextView>
-			<Button android:text="Chat" android:id="@+id/monitorButton" android:layout_width="wrap_content" android:layout_height="fill_parent"></Button>
+			<TextView android:layout_marginRight="3px" 
+				android:layout_height="wrap_content" 
+				android:layout_marginTop="3px" 
+				android:layout_marginBottom="3px" 
+				android:layout_width="wrap_content" 
+				android:layout_marginLeft="3px" 
+				android:id="@+id/reserveTextView" 
+	        		android:layout_weight="0.33"
+				android:background="#d3d3d3"
+				android:textSize="30sp"
+				android:text="TextView">
+			</TextView>
+			<Button android:text="Chat"
+			 android:id="@+id/monitorButton" 
+			 android:layout_width="wrap_content" 
+			 android:layout_height="wrap_content">
+			 </Button>
 		</TableLayout>
         <ToggleButton 
         		android:text="ToggleButton" 
         		android:id="@+id/lightButton" 
         		android:layout_width="wrap_content" 
         		android:layout_height="fill_parent"
-        		android:layout_weight="0.33"
-        		android:textOn="light 7V"
+        			android:layout_weight="0.20"
+        		android:textOn="light 6V"
         		android:textOff="light OFF"
         		android:checked="true"
         		android:visibility="visible"
