@@ -37,6 +37,7 @@
                   
         <activity android:name=".TestActivity"
                   android:label="elfKW.at                                         MMC-v3 Monitor"
+                  android:configChanges="orientation|keyboard|keyboardHidden|uiMode"
                   >
         	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
