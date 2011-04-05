@@ -68,48 +68,32 @@ public class TestActivity extends Activity  {
 		
 		speedTextView = (TextView) findViewById(R.id.speedTextView);
 
-		speedTextView.setHeight(100);
 		speedTextView.setTextColor(Color.BLACK);
-		speedTextView.setTextSize(60);
 		speedTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		speedTextView.setText("28.7km/h");
 		
 		consumeTextView = (TextView) findViewById(R.id.consumeTextView);
-		consumeTextView.setHeight(105);
 		consumeTextView.setTextColor(Color.BLACK);
-		consumeTextView.setTextSize(60);
 		consumeTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		consumeTextView.setText("10.6Wh/km");
 		
 		voltageTextView = (TextView) findViewById(R.id.voltageTextView);
-		voltageTextView.setHeight(100);
-		voltageTextView.setWidth(160);
 		voltageTextView.setTextColor(Color.BLACK);
-		voltageTextView.setTextSize(50);
 		voltageTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		voltageTextView.setText("38.4V");
 		
 		currentTextView = (TextView) findViewById(R.id.currentTextView);
-		currentTextView.setHeight(100);
-		currentTextView.setWidth(160);
 		currentTextView.setTextColor(Color.BLACK);
-		currentTextView.setTextSize(50);
 		currentTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		currentTextView.setText("8.1A");
 
 		battTextView = (TextView) findViewById(R.id.battTextView);
-		battTextView.setHeight(64);
-		battTextView.setWidth(120);
 		battTextView.setTextColor(Color.BLACK);
-		battTextView.setTextSize(35);
 		battTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		battTextView.setText("11.6Ah");
 		
 		reserveTextView = (TextView) findViewById(R.id.reserveTextView);
-		reserveTextView.setHeight(63);
-		reserveTextView.setWidth(120);
 		reserveTextView.setTextColor(Color.BLACK);
-		reserveTextView.setTextSize(30);
 		reserveTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		reserveTextView.setText("23.0km");
 
@@ -125,7 +109,6 @@ public class TestActivity extends Activity  {
 		//reserveTextView.setHeight(30);
 		
 		onOffButton = (ToggleButton) findViewById(R.id.onOffButton);
-		onOffButton.setWidth(98);
 		onOffButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				//
@@ -133,7 +116,6 @@ public class TestActivity extends Activity  {
 		});
 
 		lightButton = (ToggleButton) findViewById(R.id.lightButton);
-		lightButton.setWidth(98);
 		lightButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				//
@@ -175,12 +157,14 @@ public class TestActivity extends Activity  {
 
 	        // If BT is not on, request that it be enabled.
 	        // setupChat() will then be called during onActivityResult
-	        if (!mBluetoothAdapter.isEnabled()) {
-	            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-	            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-	        }
-	        else {
-	        	login();	
+	        if (mBluetoothAdapter != null) {
+		        if (!mBluetoothAdapter.isEnabled()) {
+		            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+		        }
+		        else {
+		        	login();	
+		        }
 	        }
 	    }
 
@@ -331,6 +315,24 @@ public class TestActivity extends Activity  {
 			mmOutStream.write("at-push=1\r".getBytes());
 			//mmOutStream.write("at-logout\r".getBytes());
 			Log.v(TAG, "at-push=1 sent");
+			
+			new Thread(new Runnable() {
+				
+				public void run() {
+					while (true) {
+						try {
+							Thread.sleep(60000);
+							Log.v(TAG, "Writing at-0");
+							mmOutStream.write("at-0\r".getBytes());
+							
+						} catch (Exception e) {
+							Log.v(TAG, "Writing at-0 thread throwed exception", e);
+						}
+					}
+					
+					
+				}
+			});
 			
 
 		} catch (Exception e) {
