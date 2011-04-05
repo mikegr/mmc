@@ -70,32 +70,32 @@ public class TestActivity extends Activity  {
 
 		speedTextView.setTextColor(Color.BLACK);
 		speedTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		speedTextView.setText("28.7km/h");
+		speedTextView.setText("0.0km/h");
 		
 		consumeTextView = (TextView) findViewById(R.id.consumeTextView);
 		consumeTextView.setTextColor(Color.BLACK);
 		consumeTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		consumeTextView.setText("10.6Wh/km");
+		consumeTextView.setText("0.0Wh/km");
 		
 		voltageTextView = (TextView) findViewById(R.id.voltageTextView);
 		voltageTextView.setTextColor(Color.BLACK);
 		voltageTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		voltageTextView.setText("38.4V");
+		voltageTextView.setText("0.0V");
 		
 		currentTextView = (TextView) findViewById(R.id.currentTextView);
 		currentTextView.setTextColor(Color.BLACK);
 		currentTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		currentTextView.setText("8.1A");
+		currentTextView.setText("0.0A");
 
 		battTextView = (TextView) findViewById(R.id.battTextView);
 		battTextView.setTextColor(Color.BLACK);
 		battTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		battTextView.setText("11.6Ah");
+		battTextView.setText("0.0Ah");
 		
 		reserveTextView = (TextView) findViewById(R.id.reserveTextView);
 		reserveTextView.setTextColor(Color.BLACK);
 		reserveTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		reserveTextView.setText("23.0km");
+		reserveTextView.setText("0.0km");
 
 		monitorButton = (Button) findViewById(R.id.monitorButton);
 		monitorButton.setOnClickListener(new View.OnClickListener() {
@@ -111,14 +111,26 @@ public class TestActivity extends Activity  {
 		onOffButton = (ToggleButton) findViewById(R.id.onOffButton);
 		onOffButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				//
 			}
 		});
 
 		lightButton = (ToggleButton) findViewById(R.id.lightButton);
 		lightButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				//
+				try {
+					Log.v(TAG, "changing light status");
+					mmOutStream.write("at-push=0\r".getBytes());
+					if (isChecked) {
+						
+						mmOutStream.write("at-light=0\r".getBytes());
+					}
+					else {
+						mmOutStream.write("at-light=1\r".getBytes());
+					}
+					mmOutStream.write("at-push=1\r".getBytes());
+				} catch (Exception e) {
+					Log.v(TAG, "changing light status failed" ,e);
+				}
 			}
 		});
 		
@@ -237,8 +249,8 @@ public class TestActivity extends Activity  {
 									
 									final float fUsedCapa = Math.round(((float)Integer.parseInt(t.nextToken())/3600000)*100.0/100.0);
 									final String sCapa = prefs.getString("capacity_id","");									
-									//NOGO final float fCapa = (float)Integer.parseInt(sCapa)/1000;
-									final float fRestCapa = (float)(9300-fUsedCapa)/1000;
+									float fCapa = (float)Integer.parseInt(sCapa);
+									final float fRestCapa = (float)(fCapa-fUsedCapa)/1000f;
 									final String sRestCapa = Float.toString(fRestCapa);
 
 									float fRestKm = (float)0.0;
