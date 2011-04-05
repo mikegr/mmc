@@ -1,16 +1,12 @@
-package com.example.android.BluetoothChat;
+package at.elfkw.mmc;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.StringTokenizer;
-import java.util.TooManyListenersException;
-
-import com.example.android.BluetoothChat.R.string;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,9 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -32,7 +26,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -79,14 +72,14 @@ public class TestActivity extends Activity  {
 		speedTextView.setTextColor(Color.BLACK);
 		speedTextView.setTextSize(60);
 		speedTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		speedTextView.setText("28.7 km/h");
+		speedTextView.setText("28.7km/h");
 		
 		consumeTextView = (TextView) findViewById(R.id.consumeTextView);
 		consumeTextView.setHeight(105);
 		consumeTextView.setTextColor(Color.BLACK);
 		consumeTextView.setTextSize(60);
 		consumeTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		consumeTextView.setText("9.6 Wh/km");
+		consumeTextView.setText("10.6Wh/km");
 		
 		voltageTextView = (TextView) findViewById(R.id.voltageTextView);
 		voltageTextView.setHeight(100);
@@ -94,7 +87,7 @@ public class TestActivity extends Activity  {
 		voltageTextView.setTextColor(Color.BLACK);
 		voltageTextView.setTextSize(50);
 		voltageTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		voltageTextView.setText("38.4 V");
+		voltageTextView.setText("38.4V");
 		
 		currentTextView = (TextView) findViewById(R.id.currentTextView);
 		currentTextView.setHeight(100);
@@ -102,7 +95,7 @@ public class TestActivity extends Activity  {
 		currentTextView.setTextColor(Color.BLACK);
 		currentTextView.setTextSize(50);
 		currentTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		currentTextView.setText("8.1 A");
+		currentTextView.setText("8.1A");
 
 		battTextView = (TextView) findViewById(R.id.battTextView);
 		battTextView.setHeight(64);
@@ -110,15 +103,15 @@ public class TestActivity extends Activity  {
 		battTextView.setTextColor(Color.BLACK);
 		battTextView.setTextSize(35);
 		battTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		battTextView.setText("63 %");
+		battTextView.setText("11.6Ah");
 		
 		reserveTextView = (TextView) findViewById(R.id.reserveTextView);
 		reserveTextView.setHeight(63);
 		reserveTextView.setWidth(120);
 		reserveTextView.setTextColor(Color.BLACK);
-		reserveTextView.setTextSize(35);
+		reserveTextView.setTextSize(30);
 		reserveTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
-		reserveTextView.setText("23 km");
+		reserveTextView.setText("23.0km");
 
 		monitorButton = (Button) findViewById(R.id.monitorButton);
 		monitorButton.setOnClickListener(new View.OnClickListener() {
@@ -147,9 +140,6 @@ public class TestActivity extends Activity  {
 			}
 		});
 		
-
-		
-		
 		//batteryBar = (ProgressBar) findViewById(R.id.batteryBar);
 		//batteryBar.setBackgroundColor(Color.GRAY);
 		//batteryBar.setAnimation(null);
@@ -158,8 +148,6 @@ public class TestActivity extends Activity  {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	}
-	
-	
 	
 	@Override
 	protected void onResume() {
@@ -244,19 +232,49 @@ public class TestActivity extends Activity  {
 								StringTokenizer t = new StringTokenizer(line, "\t");
 								if (t.countTokens() >= 4) {
 									
-									final String voltage = Float.toString(((float)Integer.parseInt(t.nextToken())) / 10);
+									final float fVoltage = (float)Integer.parseInt(t.nextToken())/10;
+									final String sVoltage = Float.toString(fVoltage);
 									
-									final String current = t.nextToken();
-									final String speed = t.nextToken();
-									final String capacity = t.nextToken();
-									TestActivity.this.runOnUiThread(new Runnable() {
-										
+									final float fCurrent = (float)(Math.round((float)Integer.parseInt(t.nextToken())/1000*100.0)/100.0);
+									final String sCurrent = Float.toString(fCurrent);
+									
+									final float fSpeed = (float)Integer.parseInt(t.nextToken())/10;
+									final String sSpeed = Float.toString(fSpeed);
+
+									float fConsume = (float)0.0;
+									String sConsume = Float.toString(fConsume);	
+									if (fSpeed < 1) {
+										sConsume = "--.-";
+									} else {
+										fConsume = (float)(Math.round(fVoltage*fCurrent/fSpeed*10.0)/10.0);
+										sConsume = Float.toString(fConsume);
+									}
+									final String fsConsume = sConsume; 
+									
+									final float fUsedCapa = Math.round(((float)Integer.parseInt(t.nextToken())/3600000)*100.0/100.0);
+									final String sCapa = prefs.getString("capacity_id","");									
+									//NOGO final float fCapa = (float)Integer.parseInt(sCapa)/1000;
+									final float fRestCapa = (float)(9300-fUsedCapa)/1000;
+									final String sRestCapa = Float.toString(fRestCapa);
+
+									float fRestKm = (float)0.0;
+									String sRestKm = Float.toString(fRestKm);	
+									if (fCurrent < 0.01) {
+										sRestKm = "--.-";
+									} else {
+										fRestKm = (float)(Math.round(fRestCapa/fCurrent*fSpeed*10.0)/10.0);
+										sRestKm = Float.toString(fRestKm);
+									}
+									final String fsRestKm = sRestKm; 
+									
+									TestActivity.this.runOnUiThread(new Runnable() {	
 										public void run() {
-											voltageTextView.setText(voltage + "V");
-											currentTextView.setText(current);
-											speedTextView.setText(speed);
-											int speedInt = Integer.parseInt(speed);
-											battTextView.setText(capacity);
+											voltageTextView.setText(sVoltage + "V");
+											currentTextView.setText(sCurrent + "A");
+											speedTextView.setText(sSpeed + "km/h");
+											consumeTextView.setText(fsConsume + "Wh/km");
+											battTextView.setText(sRestCapa + "Ah");
+											reserveTextView.setText(fsRestKm + "km");
 										}
 									});
 

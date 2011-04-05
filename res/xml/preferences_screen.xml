@@ -11,5 +11,11 @@
                 android:title="Gerät"
                 android:summary="Geräte-Adresse des MMC-Monitors (zb 00:12:6F:20:DF:B1)"
                 android:dialogTitle="Geräte-Adresse eingeben" />
+
+	<EditTextPreference
+                android:key="capacity_id"
+                android:title="Akku-Kapazität"
+                android:summary="Kapazität des Akkus in mAh (zb 9300)"
+                android:dialogTitle="Kapazität des Akkus eingeben" />
                                 
 </PreferenceScreen>               

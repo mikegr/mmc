@@ -1,4 +1,4 @@
-package com.example.android.BluetoothChat;
+package at.elfkw.mmc;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

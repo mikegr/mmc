@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.BluetoothChat;
+package at.elfkw.mmc;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -29,8 +29,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
