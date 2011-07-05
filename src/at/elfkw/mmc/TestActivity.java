@@ -36,8 +36,6 @@ public class TestActivity extends Activity  {
 	private static final String TAG = TestActivity.class.getName();
 	private static final int CENTER_HORIZONTAL = 1;
 	private static final int CENTER_VERTICAL = 16;
-	
-	private static final String PASSWORD_ID = "password_id";
 	private TextView speedTextView;
 	private TextView consumeTextView;
 	private TextView voltageTextView;
@@ -46,12 +44,15 @@ public class TestActivity extends Activity  {
 	private TextView reserveTextView;
 	private ToggleButton onOffButton;
 	private Button monitorButton;
-	private Button battfullButton;
 	private ToggleButton lightButton;
 	//private ProgressBar batteryBar;
 	private TextView mTitle;
 	
+	private Button battfullButton;
+	 
 	SharedPreferences prefs = null;
+	private static final String PASSWORD_ID = "password_id";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -86,6 +87,7 @@ public class TestActivity extends Activity  {
 		voltageTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
 		voltageTextView.setText("0.0V");
 		
+		
 		currentTextView = (TextView) findViewById(R.id.currentTextView);
 		currentTextView.setTextColor(Color.BLACK);
 		currentTextView.setGravity(CENTER_HORIZONTAL + CENTER_VERTICAL);
@@ -103,46 +105,33 @@ public class TestActivity extends Activity  {
 
 		monitorButton = (Button) findViewById(R.id.monitorButton);
 		monitorButton.setOnClickListener(new View.OnClickListener() {
+			
 			public void onClick(View v) {
 				Intent i = new Intent(TestActivity.this, BluetoothChat.class);
 				startActivity(i);
 			}
 		});
-
-		battfullButton = (Button) findViewById(R.id.battfullButton);
-		battfullButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				try {
-					if (socket != null) {
-						Log.v(TAG, "setting battery full");
-						mmOutStream.write("at-push=0\r".getBytes());
-						mmOutStream.write("at-ccap\r".getBytes());
-						mmOutStream.write("at-push=1\r".getBytes());
-					}
-				} catch (Exception e) {
-					Log.v(TAG, "setting battery full failed" ,e);
-				}				
-			}
-		});
+		
+		//reserveTextView.setHeight(30);
 		
 		onOffButton = (ToggleButton) findViewById(R.id.onOffButton);
 		onOffButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				try {
-					if (socket != null) {
-						Log.v(TAG, "changing motor status");
-						mmOutStream.write("at-push=0\r".getBytes());
-						if (isChecked) {
-							mmOutStream.write("at-eon\r".getBytes());
-						}
-						else {
-							mmOutStream.write("at-eoff\r".getBytes());
-						}
-						mmOutStream.write("at-push=1\r".getBytes());
-					}
-				} catch (Exception e) {
-					Log.v(TAG, "changing motor status failed" ,e);
-				}
+				 try {
+			         if (socket != null) {
+			                 Log.v(TAG, "changing motor status");
+			                 mmOutStream.write("at-push=0\r".getBytes());
+			                 if (isChecked) {
+			                         mmOutStream.write("at-eon\r".getBytes());
+			                 }
+			                 else {
+			                         mmOutStream.write("at-eoff\r".getBytes());
+			                 }
+			                 mmOutStream.write("at-push=1\r".getBytes());
+			         }
+			 } catch (Exception e) {
+			         Log.v(TAG, "changing motor status failed" ,e);
+			 }
 			}
 		});
 
@@ -150,21 +139,36 @@ public class TestActivity extends Activity  {
 		lightButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				try {
-					if (socket != null) {
-						Log.v(TAG, "changing light status");
-						mmOutStream.write("at-push=0\r".getBytes());
-						if (isChecked) {
-							mmOutStream.write("at-light=1\r".getBytes());
-						}
-						else {
-							mmOutStream.write("at-light=0\r".getBytes());
-						}
-						mmOutStream.write("at-push=1\r".getBytes());
+					Log.v(TAG, "changing light status");
+					mmOutStream.write("at-push=0\r".getBytes());
+					if (isChecked) {
+						
+						mmOutStream.write("at-light=0\r".getBytes());
 					}
+					else {
+						mmOutStream.write("at-light=1\r".getBytes());
+					}
+					mmOutStream.write("at-push=1\r".getBytes());
 				} catch (Exception e) {
 					Log.v(TAG, "changing light status failed" ,e);
 				}
 			}
+		});
+		
+		battfullButton = (Button) findViewById(R.id.battfullButton);
+		battfullButton.setOnClickListener(new View.OnClickListener() {
+		        public void onClick(View v) {
+		                try {
+		                        if (socket != null) {
+		                                Log.v(TAG, "setting battery full");
+		                                mmOutStream.write("at-push=0\r".getBytes());
+		                                mmOutStream.write("at-ccap\r".getBytes());
+		                                mmOutStream.write("at-push=1\r".getBytes());
+		                        }
+		                } catch (Exception e) {
+		                        Log.v(TAG, "setting battery full failed" ,e);
+		                }
+		        }
 		});
 		
 		//batteryBar = (ProgressBar) findViewById(R.id.batteryBar);
@@ -172,14 +176,15 @@ public class TestActivity extends Activity  {
 		//batteryBar.setAnimation(null);
 		//batteryBar.setEnabled(true);
 		
-				
-		try {
-			String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-			Editor edit = prefs.edit();
-			edit.putString("version_id", version);
-		} catch (Exception e2) {
-			// TODO: handle exception
-		}
+		 try {
+	         String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+	         Editor edit = prefs.edit();
+	         edit.putString("version_id", version);
+		 } catch (Exception e2) {
+	         // TODO: handle exception
+		 }
+	 
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 	}
 	
@@ -206,7 +211,7 @@ public class TestActivity extends Activity  {
 	    public void onStart() {
 	        super.onStart();
 	        Log.e(TAG, "++ ON START ++");
-	        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
 	        // If BT is not on, request that it be enabled.
 	        // setupChat() will then be called during onActivityResult
 	        if (mBluetoothAdapter != null) {
@@ -221,11 +226,10 @@ public class TestActivity extends Activity  {
 	    }
 
 	public void login() {
-
 		Log.v(TAG, "starting login");
 		try {
-
-			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			
+			
 			Log.v(TAG, "got adapter");
 			String deviceId = prefs.getString("device_id","");
 			
@@ -234,7 +238,6 @@ public class TestActivity extends Activity  {
 	            startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
 	            return;
 			}
-			
 			if (socket != null) {
 				try {
 					socket.close();
@@ -242,7 +245,7 @@ public class TestActivity extends Activity  {
 					e2.printStackTrace();
 				}
 			}
-		
+			
 			BluetoothDevice mmDevice = mBluetoothAdapter
 					.getRemoteDevice(deviceId);
 			Log.v(TAG, "got device");
@@ -280,8 +283,8 @@ public class TestActivity extends Activity  {
 									final String sSpeed = Float.toString(fSpeed);
 
 									float fConsume = (float)0.0;
-									String sConsume = Float.toString(fConsume);	
-									if (fSpeed < 1) {
+									String sConsume = Float.toString(fConsume);
+									if ((fCurrent < 0.01) || (fSpeed < 0.1)) {
 										sConsume = "--.-";
 									} else {
 										fConsume = (float)(Math.round(fVoltage*fCurrent/fSpeed*10.0)/10.0);
@@ -291,9 +294,7 @@ public class TestActivity extends Activity  {
 									
 									final float fUsedCapa = Math.round(((float)Integer.parseInt(t.nextToken())/3600)*100.0/100.0);
 									final String sCapa = prefs.getString("capacity_id","");									
-									Log.v(TAG, "sCapa=" + sCapa);
 									float fCapa = (float)Integer.parseInt(sCapa);
-									
 									DecimalFormat df = new DecimalFormat("#.#");
 									final float fRestCapa = (float)(fCapa-fUsedCapa)/1000;
 									final String sRestCapa = df.format(fRestCapa);
@@ -301,34 +302,39 @@ public class TestActivity extends Activity  {
 
 									float fRestKm = (float)0.0;
 									String sRestKm = Float.toString(fRestKm);	
-									if ((fCurrent < 0.01) || (fSpeed < 0.1)) {
+									if (fCurrent < 0.01) {
 										sRestKm = "--.-";
 									} else {
 										fRestKm = (float)(Math.round(fRestCapa/fCurrent*fSpeed*10.0)/10.0);
 										sRestKm = Float.toString(fRestKm);
 									}
 									final String fsRestKm = sRestKm; 
-
+									
 									final float fMaxCurrent = (float)(Math.round((float)Integer.parseInt(t.nextToken())/1000*100.0)/100.0);
 									final String sMaxCurrent = Float.toString(fMaxCurrent);
-
+									 
 									TestActivity.this.runOnUiThread(new Runnable() {	
 										public void run() {
-											voltageTextView.setText(sVoltage + "V");
 											currentTextView.setText(sCurrent + "|" + sMaxCurrent + "A");
+											voltageTextView.setText(sVoltage + "V");
 											speedTextView.setText(sSpeed + "km/h");
 											consumeTextView.setText(fsConsume + "Wh/km");
 											battTextView.setText(sRestCapa + "Ah");
 											reserveTextView.setText(fsRestKm + "km");
 										}
 									});
+
+									
 								}
+								
 							} catch (Exception e) {
-								Log.e(TAG, "Processing data line failed",e);
+								Log.e(TAG, "Processing line failed",e);
 							}
+								
+							
 						}
 					} catch (Exception e) {
-						Log.v(TAG, "Reading thread threw exception", e);
+						Log.v(TAG, "Reading thread throwed exception", e);
 					}
 					finally {
 						/*
@@ -355,7 +361,6 @@ public class TestActivity extends Activity  {
 			
 			// password_id?
 			String password = prefs.getString(PASSWORD_ID, "");
-
 			Log.v(TAG, "password read:" + password);
 			mmOutStream.write((password + "\r").getBytes());
 			//mmOutStream.write(("a\r").getBytes());
@@ -420,23 +425,16 @@ public class TestActivity extends Activity  {
 		finally {
 			mTitle.setText(R.string.title_not_connected);
 		}
-		
 	}
 
 	private void close() {
 		Log.v(TAG, "Closing streams and socket");
 		try {
-			if (mmOutStream !=null) mmOutStream.close();
-			if (mmInStream != null) mmInStream.close();
 			if (socket != null) socket.close();
-			
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		socket = null;
-		mmInStream = null;
-		mmOutStream = null;
 	}
 
 	@Override
@@ -458,11 +456,12 @@ public class TestActivity extends Activity  {
                 Editor editor = prefs.edit();
                 editor.putString("device_id", address);
                 editor.commit();
+                
                 String password = prefs.getString(PASSWORD_ID, "");
-    			if (password.equals("")) {
-    				Editor edit = prefs.edit();
-    				edit.putString(PASSWORD_ID, "1234");
-    			}
+                if (password.equals("")) {
+                        Editor edit = prefs.edit();
+                        edit.putString(PASSWORD_ID, "1234");
+                }
                 // Attempt to connect to the device
                 login();
             }
@@ -497,12 +496,9 @@ public class TestActivity extends Activity  {
 			login();
 		}
 		if (item.getItemId() == R.id.exit) {
-			finish();
-			return true;
+	        finish();
+	        return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	
-
 }
