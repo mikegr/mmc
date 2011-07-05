@@ -362,6 +362,8 @@ public class TestActivity extends Activity  {
 			String password = prefs.getString(PASSWORD_ID, "");
 			Log.v(TAG, "password read:" + password);
 			mmOutStream.write((password + "\r").getBytes());
+			Thread.sleep(100);
+			mmOutStream.write((password + "\r").getBytes());
 			//mmOutStream.write(("a\r").getBytes());
 
 			//byte[] buffer = new byte[1024];
