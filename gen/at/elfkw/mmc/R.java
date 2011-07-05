@@ -15,27 +15,30 @@ public final class R {
     }
     public static final class id {
         public static final int battTextView=0x7f070012;
+        public static final int battfullButton=0x7f070016;
         public static final int button_scan=0x7f070006;
         public static final int button_send=0x7f070009;
         public static final int consumeTextView=0x7f07000b;
         public static final int currentTextView=0x7f07000e;
-        public static final int discoverable=0x7f07001a;
+        public static final int discoverable=0x7f07001d;
         public static final int edit_text_out=0x7f070008;
+        public static final int exit=0x7f07001b;
         public static final int in=0x7f070007;
-        public static final int lightButton=0x7f070015;
+        public static final int lightButton=0x7f070017;
         public static final int linearLayout1=0x7f07000c;
         public static final int linearLayout2=0x7f07000f;
-        public static final int login=0x7f070016;
-        public static final int logout=0x7f070018;
+        public static final int login=0x7f070018;
+        public static final int logout=0x7f07001a;
         public static final int monitorButton=0x7f070014;
         public static final int new_devices=0x7f070005;
         public static final int onOffButton=0x7f070010;
         public static final int paired_devices=0x7f070003;
         public static final int reserveTextView=0x7f070013;
-        public static final int scan=0x7f070019;
-        public static final int settings=0x7f070017;
+        public static final int scan=0x7f07001c;
+        public static final int settings=0x7f070019;
         public static final int speedTextView=0x7f07000a;
         public static final int tableLayout1=0x7f070011;
+        public static final int tableLayout2=0x7f070015;
         public static final int title_left_text=0x7f070000;
         public static final int title_new_devices=0x7f070004;
         public static final int title_paired_devices=0x7f070002;
@@ -62,6 +65,7 @@ public final class R {
          */
         public static final int connect=0x7f05000e;
         public static final int discoverable=0x7f05000f;
+        public static final int exit=0x7f050014;
         public static final int login=0x7f050013;
         public static final int logout=0x7f050012;
         public static final int none_found=0x7f05000a;

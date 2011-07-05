@@ -18,8 +18,7 @@ public class MmcPreferences extends PreferenceActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences_screen);
-		
-		
+		findPreference("version_id").setEnabled(false);		
 	}
 	
 	

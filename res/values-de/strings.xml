@@ -2,5 +2,6 @@
     <string name="settings">Einstellungen</string>
     <string name="logout">Ausloggen</string>
     <string name="login">Einloggen</string>
+    <string name="exit">Beenden</string>
 </resources>
 

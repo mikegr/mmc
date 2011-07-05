@@ -4,3 +4,13 @@
         		android:layout_height="wrap_content"
         		android:visibility="invisible">
         </ProgressBar>
+        
+        <Button 
+        		android:text="Button" 
+        		android:id="@+id/battfullButton" 
+        		android:layout_width="wrap_content" 
+        		android:layout_height="fill_parent"
+       			android:layout_weight="0.20"
+        		android:visibility="visible"
+		>
+        </Button>

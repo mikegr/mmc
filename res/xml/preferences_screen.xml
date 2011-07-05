@@ -17,5 +17,11 @@
                 android:title="Akku-Kapazität"
                 android:summary="Kapazität des Akkus in mAh (zb 9300)"
                 android:dialogTitle="Kapazität des Akkus eingeben" />
-                                
+
+	<EditTextPreference
+                android:key="version_id"
+                android:title="Versions-Nummer"
+                android:enabled="false"
+                />
+                                                         
 </PreferenceScreen>               

@@ -242,44 +242,51 @@ public class BluetoothChatService {
         }
 
         public void run() {
-            if (D) Log.d(TAG, "BEGIN mAcceptThread" + this);
-            setName("AcceptThread");
-            BluetoothSocket socket = null;
+        	try {
+                if (D) Log.d(TAG, "BEGIN mAcceptThread" + this);
+                setName("AcceptThread");
+                BluetoothSocket socket = null;
 
-            // Listen to the server socket if we're not connected
-            while (mState != STATE_CONNECTED) {
-                try {
-                    // This is a blocking call and will only return on a
-                    // successful connection or an exception
-                    socket = mmServerSocket.accept();
-                } catch (IOException e) {
-                    Log.e(TAG, "accept() failed", e);
-                    break;
-                }
+                // Listen to the server socket if we're not connected
+                while (mState != STATE_CONNECTED) {
+                    try {
+                        // This is a blocking call and will only return on a
+                        // successful connection or an exception
+                    	Log.v(TAG, "Start accepting from serverSocket");
+                        socket = mmServerSocket.accept();
+                    } catch (IOException e) {
+                        Log.e(TAG, "accept() failed", e);
+                        break;
+                    }
 
-                // If a connection was accepted
-                if (socket != null) {
-                    synchronized (BluetoothChatService.this) {
-                        switch (mState) {
-                        case STATE_LISTEN:
-                        case STATE_CONNECTING:
-                            // Situation normal. Start the connected thread.
-                            connected(socket, socket.getRemoteDevice());
-                            break;
-                        case STATE_NONE:
-                        case STATE_CONNECTED:
-                            // Either not ready or already connected. Terminate new socket.
-                            try {
-                                socket.close();
-                            } catch (IOException e) {
-                                Log.e(TAG, "Could not close unwanted socket", e);
+                    // If a connection was accepted
+                    if (socket != null) {
+                        synchronized (BluetoothChatService.this) {
+                            switch (mState) {
+                            case STATE_LISTEN:
+                            case STATE_CONNECTING:
+                                // Situation normal. Start the connected thread.
+                                connected(socket, socket.getRemoteDevice());
+                                break;
+                            case STATE_NONE:
+                            case STATE_CONNECTED:
+                                // Either not ready or already connected. Terminate new socket.
+                                try {
+                                    socket.close();
+                                } catch (IOException e) {
+                                    Log.e(TAG, "Could not close unwanted socket", e);
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }
-            }
+				
+			} catch (Exception e) {
+				Log.v(TAG, "serverSocket got exception", e);
+			}
             if (D) Log.i(TAG, "END mAcceptThread");
+
         }
 
         public void cancel() {
@@ -432,11 +439,21 @@ public class BluetoothChatService {
         }
 
         public void cancel() {
+        	Log.v(TAG, "Canceling connected thread");
+            try {
+				mmOutStream.write("at-push=0\r".getBytes());
+				mmOutStream.write("at-logout\r".getBytes());
+				mmOutStream.flush();
+				mmOutStream.close();
+				mmInStream.close();
+            } catch (IOException e) {
+            	Log.e(TAG, "Tried to logout", e);
+            }
             try {
                 mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "close() of connect socket failed", e);
-            }
+			} catch (Exception e) {
+				Log.e(TAG, "close() of connect socket failed", e);
+			}
         }
     }
 }

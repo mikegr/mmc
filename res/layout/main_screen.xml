@@ -80,8 +80,8 @@
         		android:id="@+id/onOffButton" 
         		android:layout_width="wrap_content" 
         		android:layout_height="fill_parent"
-        		android:textOn="engine"
-        		android:textOff="engine"
+        		android:textOn="engine ON"
+        		android:textOff="engine OFF"
         		android:checked="true"
         		android:visibility="visible"
         			android:layout_weight="0.20"
@@ -125,18 +125,30 @@
 			 android:layout_height="wrap_content">
 			 </Button>
 		</TableLayout>
-        <ToggleButton 
-        		android:text="ToggleButton" 
-        		android:id="@+id/lightButton" 
-        		android:layout_width="wrap_content" 
-        		android:layout_height="fill_parent"
-        			android:layout_weight="0.20"
-        		android:textOn="light 6V"
-        		android:textOff="light OFF"
-        		android:checked="true"
-        		android:visibility="visible"
-		>
-        </ToggleButton>
-        
+		<TableLayout 
+			android:layout_width="wrap_content" 
+			android:id="@+id/tableLayout2" 
+			android:layout_height="fill_parent"
+			>
+	        <Button	android:text="Battery full" 
+	        		android:id="@+id/battfullButton" 
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="fill_parent"
+	        		android:layout_weight="0.20"
+			>
+	        </Button>
+	        <ToggleButton 
+	        		android:text="ToggleButton" 
+	        		android:id="@+id/lightButton" 
+	        		android:layout_width="wrap_content" 
+	        		android:layout_height="fill_parent"
+	        			android:layout_weight="0.20"
+	        		android:textOn="light ON"
+	        		android:textOff="light OFF"
+	        		android:checked="true"
+	        		android:visibility="visible"
+			>
+	        </ToggleButton>
+		</TableLayout>		
     </LinearLayout>
 </LinearLayout>
