@@ -300,8 +300,8 @@ public class TestActivity extends Activity  {
 									Log.v(TAG, "sRestCapa=" + sRestCapa);
 
 									float fRestKm = (float)0.0;
-									String sRestKm = Float.toString(fRestKm);	
-									if (fCurrent < 0.01) {
+									String sRestKm = Float.toString(fRestKm);
+									if ((fCurrent < 0.01) || (fSpeed < 0.1)) {
 										sRestKm = "--.-";
 									} else {
 										fRestKm = (float)(Math.round(fRestCapa/fCurrent*fSpeed*10.0)/10.0);
