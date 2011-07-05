@@ -495,6 +495,7 @@ public class TestActivity extends Activity  {
 			login();
 		}
 		if (item.getItemId() == R.id.exit) {
+			logout();
 	        finish();
 	        return true;
 		}
