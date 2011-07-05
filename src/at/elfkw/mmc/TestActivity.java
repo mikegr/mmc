@@ -142,11 +142,10 @@ public class TestActivity extends Activity  {
 					Log.v(TAG, "changing light status");
 					mmOutStream.write("at-push=0\r".getBytes());
 					if (isChecked) {
-						
-						mmOutStream.write("at-light=0\r".getBytes());
+						mmOutStream.write("at-light=1\r".getBytes());
 					}
 					else {
-						mmOutStream.write("at-light=1\r".getBytes());
+						mmOutStream.write("at-light=0\r".getBytes());
 					}
 					mmOutStream.write("at-push=1\r".getBytes());
 				} catch (Exception e) {
