@@ -292,7 +292,11 @@ public class TestActivity extends Activity  {
 									final String fsConsume = sConsume; 
 									
 									final float fUsedCapa = Math.round(((float)Integer.parseInt(t.nextToken())/3600)*100.0/100.0);
-									final String sCapa = prefs.getString("capacity_id","");									
+									String sCapa = prefs.getString("capacity_id","");	
+									// if sCapa is empty, all values will be empty on screen?
+									if (sCapa.equals(""))
+										sCapa = new String("0");
+									final String fsCapa = sCapa;
 									float fCapa = (float)Integer.parseInt(sCapa);
 									DecimalFormat df = new DecimalFormat("#.#");
 									final float fRestCapa = (float)(fCapa-fUsedCapa)/1000;
@@ -462,7 +466,16 @@ public class TestActivity extends Activity  {
                 if (password.equals("")) {
                         Editor edit = prefs.edit();
                         edit.putString(PASSWORD_ID, "1234");
+                        edit.commit();
                 }
+
+                String capa = prefs.getString("capacity_id", "");
+                if (capa.equals("")) {
+                        Editor edit = prefs.edit();
+                        edit.putString("capacity_id", "9300");
+                        edit.commit();
+                }
+                
                 // Attempt to connect to the device
                 login();
             }

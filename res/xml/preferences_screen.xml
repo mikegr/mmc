@@ -21,7 +21,6 @@
 	<EditTextPreference
                 android:key="version_id"
                 android:title="Versions-Nummer"
-                android:enabled="false"
                 />
                                                          
 </PreferenceScreen>               
