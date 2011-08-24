@@ -399,7 +399,7 @@ public class TestActivity extends Activity  {
 					
 					
 				}
-			});
+			}).start();
 			
 
 		} catch (Exception e) {
