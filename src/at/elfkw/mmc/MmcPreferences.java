@@ -24,7 +24,7 @@ public class MmcPreferences extends PreferenceActivity{
 		findPreference("version_id").setEnabled(false);	
 		
 	
-		Toast toast = Toast.makeText(MmcPreferences.this, "Nicht vergessen die Einstellungen anschlie�end im Hauptbildschirm ans MMC zu senden", Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(MmcPreferences.this, "Nicht vergessen die Einstellungen anschließend im Hauptbildschirm ans MMC zu senden", Toast.LENGTH_LONG);
 		toast.show();
 	}
 

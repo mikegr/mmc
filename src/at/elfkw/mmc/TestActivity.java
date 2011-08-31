@@ -1,9 +1,9 @@
 /*
  *forced disconnect
  *(mmc sync thread in einen service auslagern)
- * m�glichkeit direkt vom mainscreen aus commands zu senden
+ * möglichkeit direkt vom mainscreen aus commands zu senden
  * schriftfarbe
- * (gesture editor einf�gen)
+ * (gesture editor einfügen)
  * seek bars in preferences zum Einstellen der p und i werte
  * einstellbares Hintergrundbild
  */
@@ -762,7 +762,7 @@ public class TestActivity extends Activity implements TextToSpeech.OnInitListene
 					String vmaxsend= "at-sl2="+vmax+"0\r";
 					mmOutStream.write(vmaxsend.getBytes());
 				}
-				Thread.sleep(100); //Teilweise nicht �bernommene commands ohne sleep
+				Thread.sleep(100); //Teilweise nicht übernommene commands ohne sleep
 				mmOutStream.write(vlowsend.getBytes());
 				Thread.sleep(100); 
 				mmOutStream.write(speedcalibsend.getBytes());
@@ -867,7 +867,7 @@ public class TestActivity extends Activity implements TextToSpeech.OnInitListene
 
 
 	// gesten wurden mit dem gesture Builder aus den api Demos erstellt
-	// ein gesture editor k�nnte gleich in den mmc viewer eingebunden werden
+	// ein gesture editor könnte gleich in den mmc viewer eingebunden werden
 	public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
 		ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
 		if (predictions.size() > 0 && predictions.get(0).score > 3.0) {
