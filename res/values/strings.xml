@@ -15,7 +15,7 @@
 -->
 
 <resources>
-    <string name="app_name">elfkw.at MMC-v3 Monitor</string>
+    <string name="app_name">MMC-v3 Client</string>
 
     <!--  BluetoothChat -->
     <string name="send">Send</string>
@@ -39,5 +39,6 @@
     <string name="discoverable">Make discoverable</string>
     
     <string name="settings">Einstellungen</string>
-    <string name="title_elfkw">elfkw.at</string>
+    <string name="title_elfkw">ep0</string>
+    <string name="apply">Einstellungen übernehmen</string>
 </resources>

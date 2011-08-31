@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/login" android:title="@string/login"></item>
-    <item android:id="@+id/settings" android:title="@string/settings"></item>
+  <item android:id="@+id/settings" android:title="@string/settings"></item><item android:id="@+id/applyall" android:title="Einstellungen senden"></item><item android:id="@+id/login" android:title="@string/login"></item>
+    
     <item android:id="@+id/logout" android:title="@string/logout"></item>
     <item android:id="@+id/exit" android:title="@string/exit"></item>
+    
 </menu>

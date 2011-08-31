@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.gesture.GestureOverlayView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gesturescreen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gestureStrokeType="multiple"
+    android:eventsInterceptionEnabled="true"
+    android:keepScreenOn="true">
+	
+
+
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:orientation="vertical"
-	android:background="#696969"
-  >
+  android:orientation="vertical" 
+  android:background="@drawable/beach2">
+
     <TextView 
     	android:text="TextView" 
     	android:id="@+id/speedTextView" 
@@ -15,10 +27,9 @@
 		android:layout_marginBottom="3px"
 		android:layout_marginRight="3px"
 		android:layout_marginTop="3px"
-		android:background="#d3d3d3"
 		android:layout_weight="0.2"
 		android:textSize="35sp"
-		>
+		android:background="#2000">
     </TextView>
     <TextView 
     	android:text="TextView" 
@@ -29,70 +40,85 @@
 		android:layout_marginBottom="3px"
 		android:layout_marginRight="3px"
 		android:layout_marginTop="3px"
-		android:background="#d3d3d3"
 		android:layout_weight="0.2"
 		android:textSize="35sp"
-    	>
+    	android:background="#2000">
     </TextView>
-    <LinearLayout 
-    	android:layout_height="wrap_content" 
-    	android:id="@+id/linearLayout1" 
-    	android:layout_width="fill_parent"
-    	android:layout_weight="0.2"
-    	>
-        <TextView 
-        	android:text="TextView"
-        	android:id="@+id/voltageTextView" 
-        	android:layout_width="wrap_content" 
-        	android:layout_height="fill_parent"
-        	android:layout_marginLeft="3px"
-			android:layout_marginBottom="3px"
-			android:layout_marginRight="3px"
-			android:layout_marginTop="3px"
-			android:background="#d3d3d3"
-			android:layout_weight="0.5"
-			android:textSize="35sp"
-        	>
-        </TextView>
-        <TextView 
-        	android:text="TextView"
-        	android:id="@+id/currentTextView"
-        	android:layout_width="wrap_content"
-        	android:layout_height="fill_parent"
-        	android:layout_marginLeft="3px"
-			android:layout_marginBottom="3px"
-			android:layout_marginRight="3px"
-			android:layout_marginTop="3px"
-			android:background="#d3d3d3"
-			android:layout_weight="0.5"
-			android:textSize="35sp"
-			>
-        </TextView>
-    </LinearLayout>
+
+        <LinearLayout 
+        	android:id="@+id/linearLayout1" 
+        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="0.12">
+            <TextView 
+            	android:text="TextView"
+            	android:id="@+id/voltageTextView" 
+            	android:layout_width="wrap_content" 
+            	android:layout_height="fill_parent"
+            	android:layout_marginLeft="3px"
+    			android:layout_marginBottom="3px"
+    			android:layout_marginRight="3px"
+    			android:layout_marginTop="3px"
+    			android:layout_weight="0.5"
+    			android:textSize="35sp"
+            	android:background="#2000">
+            </TextView>
+            <TextView 
+            	android:text="TextView"
+            	android:id="@+id/currentTextView"
+            	android:layout_width="wrap_content"
+            	android:layout_height="fill_parent"
+            	android:layout_marginLeft="3px"
+    			android:layout_marginBottom="3px"
+    			android:layout_marginRight="3px"
+    			android:layout_marginTop="3px"
+    			android:layout_weight="0.5"
+    			android:textSize="35sp"
+    			android:background="#2000">
+            </TextView>
+        </LinearLayout>
+
     <LinearLayout 
     	android:layout_height="wrap_content" 
     	android:id="@+id/linearLayout2" 
     	android:layout_width="fill_parent"
     	android:layout_weight="0.4"
     	>
-		<ToggleButton 
-        		android:text="ToggleButton" 
-        		android:id="@+id/onOffButton" 
-        		android:layout_width="wrap_content" 
-        		android:layout_height="fill_parent"
-        		android:textOn="engine ON"
-        		android:textOff="engine OFF"
-        		android:checked="true"
-        		android:visibility="visible"
-        			android:layout_weight="0.20"
-        		>
-        </ToggleButton>
+        <TableLayout android:layout_weight="0.20" android:layout_width="wrap_content" android:layout_height="fill_parent" android:id="@+id/TableLayout3" android:paddingBottom="1dp" android:paddingLeft="1dp">
+            <TableLayout
+                android:id="@+id/onOffButtontable"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.20" android:paddingTop="1dp" android:paddingBottom="1dp">
+                <ToggleButton android:textOn="engine ON" 
+                android:layout_width="wrap_content" 
+                android:visibility="visible" 
+                android:id="@+id/onOffButton" 
+                android:layout_height="fill_parent" 
+                android:text="ToggleButton"
+                android:textOff="engine OFF"
+                android:checked="true"
+                android:background="@drawable/transparent" 
+    ></ToggleButton>
+            </TableLayout>
+            
+            <ToggleButton 
+            android:textOn="Boost" 
+            android:visibility="gone" 
+            android:id="@+id/boostButton" 
+            android:text="ToggleButton" 
+            android:layout_weight="0.20" 
+            android:textOff="no Boost" 
+            android:checked="false" 
+            android:layout_height="fill_parent" 
+            android:layout_width="wrap_content"
+            android:background="@drawable/transparent"           ></ToggleButton> 
+            
+        </TableLayout>
 		<TableLayout 
 			android:layout_width="wrap_content" 
 			android:id="@+id/tableLayout1" 
 			android:layout_height="fill_parent"
 			android:layout_weight="0.60"
-			>
+			android:paddingLeft="1dp">
 			<TextView 
 			android:layout_height="wrap_content" 
 			android:text="TextView" 
@@ -103,9 +129,8 @@
 			android:layout_marginBottom="3px"
 			android:layout_marginRight="3px"
 			android:layout_marginTop="3px"
-			android:background="#d3d3d3"
 			android:textSize="30sp"
-			>
+			android:background="#2000">
 			</TextView>
 			<TextView android:layout_marginRight="3px" 
 				android:layout_height="wrap_content" 
@@ -115,40 +140,61 @@
 				android:layout_marginLeft="3px" 
 				android:id="@+id/reserveTextView" 
 	        		android:layout_weight="0.33"
-				android:background="#d3d3d3"
 				android:textSize="30sp"
-				android:text="TextView">
+				android:text="TextView" android:background="#2000">
 			</TextView>
-			<Button android:text="Chat"
-			 android:id="@+id/monitorButton" 
-			 android:layout_width="wrap_content" 
-			 android:layout_height="wrap_content">
-			 </Button>
+			<TableLayout
+			    android:id="@+id/monitorButtontable"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" android:paddingTop="1dp" android:paddingBottom="1dp">
+			    <Button android:text="Chat"
+    			 android:id="@+id/monitorButton" 
+    			 android:layout_width="wrap_content" 
+    			 android:layout_height="wrap_content"
+    			 android:background="@drawable/transparent">
+    			 
+    			 </Button>
+			</TableLayout>
 		</TableLayout>
 		<TableLayout 
 			android:layout_width="wrap_content" 
 			android:id="@+id/tableLayout2" 
 			android:layout_height="fill_parent"
 			>
-	        <Button	android:text="Battery full" 
-	        		android:id="@+id/battfullButton" 
-	        		android:layout_width="wrap_content" 
-	        		android:layout_height="fill_parent"
-	        		android:layout_weight="0.20"
-			>
-	        </Button>
-	        <ToggleButton 
-	        		android:text="ToggleButton" 
-	        		android:id="@+id/lightButton" 
-	        		android:layout_width="wrap_content" 
-	        		android:layout_height="fill_parent"
-	        			android:layout_weight="0.20"
-	        		android:textOn="light ON"
-	        		android:textOff="light OFF"
-	        		android:checked="true"
-	        		android:visibility="visible"
-			>
-	        </ToggleButton>
+	        <TableLayout
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:layout_weight="0.20" android:padding="1dp" android:id="@+id/battfulltable">
+	            <Button	android:text="Battery full" 
+    	        		android:id="@+id/battfullButton" 
+    	        		android:layout_width="wrap_content" 
+    	        		android:layout_height="fill_parent"
+    	        		android:background="@drawable/transparent" 
+    			>
+    	        </Button>
+	        </TableLayout>
+	        
+	        <TableLayout
+	            android:id="@+id/lightButtontable"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:layout_weight="0.20" android:padding="1dp">
+	            <ToggleButton 
+    	        		android:text="ToggleButton" 
+    	        		android:id="@+id/lightButton" 
+    	        		android:layout_width="wrap_content" 
+    	        		android:layout_height="fill_parent"
+    	        			android:textOn="light ON"
+    	        		android:textOff="light OFF"
+    	        		android:checked="true"
+    	        		android:visibility="visible"
+    	        		android:background="@drawable/transparent" 
+    			>
+    	        </ToggleButton>
+	        </TableLayout>
 		</TableLayout>		
     </LinearLayout>
 </LinearLayout>
+
+
+</android.gesture.GestureOverlayView>
