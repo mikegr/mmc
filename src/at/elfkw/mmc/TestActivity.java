@@ -1,3 +1,18 @@
+/* Copyright 2011 elfKW (Elektroleichtfahrzeuge elfKW KG)
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package at.elfkw.mmc;
 
 import java.io.BufferedReader;
@@ -31,7 +46,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class TestActivity extends Activity  {
+/**
+ * forced disconnect
+ * (mmc sync thread in einen service auslagern)
+ * möglichkeit direkt vom mainscreen aus commands zu senden
+ * schriftfarbe
+ * (gesture editor einfügen)
+ * seek bars in preferences zum Einstellen der p und i werte
+ * einstellbares Hintergrundbild
+ */
+public class TestActivity extends Activity {
 
 	private static final String TAG = TestActivity.class.getName();
 	private static final int CENTER_HORIZONTAL = 1;

@@ -1,3 +1,17 @@
+   MMC Monitor
+   Monitor für mmc-v3 Controller
+   =============================
+   
+   Copyright 2011 elfKW (Elektroleichtfahrzeuge elfKW KG)
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+
+   Android Market Link:
+   https://market.android.com/details?id=at.elfkw.mmc
+ 
+ 
+Git-Cheatsheet and Links
+========================
 git console
 
 save local
